@@ -28,7 +28,6 @@ services:
     depends_on:
       - server
 
-
   grafana:
     container_name: grafana
     image: grafana/grafana
