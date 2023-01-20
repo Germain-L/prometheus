@@ -5,8 +5,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    labels:
+      - "prometheus.io/scrape=true"
+      - "prometheus.io/port=8000"
 
   client:
     build: 
       context: ./client
       dockerfile: Dockerfile
+
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
