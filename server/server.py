@@ -12,7 +12,7 @@ class HelloHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/plain; version=0.0.4; charset=utf-8')
             self.end_headers()
-            self.wfile.write(generate_latest().encode('utf-8'))
+            self.wfile.write(generate_latest())
         else:
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
