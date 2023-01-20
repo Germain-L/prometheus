@@ -1,0 +1,12 @@
+services:
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
