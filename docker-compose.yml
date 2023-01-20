@@ -1,11 +1,13 @@
 services:
   server:
     container_name: server
+    # Build the image from the Dockerfile in the server directory
     build: 
       context: ./server
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    # Tell Prometheus to scrape this container
     labels:
       - "prometheus.io/scrape=true"
       - "prometheus.io/port=8000"
@@ -15,12 +17,15 @@ services:
     build: 
       context: ./client
       dockerfile: Dockerfile
+    # Wait for the server to be ready before starting the client
     depends_on:
       - server
 
   prometheus:
     container_name: prometheus
+    # Use the official Prometheus image
     image: prom/prometheus
+    # Mount the Prometheus config file
     volumes:
       - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
     ports:
@@ -33,13 +38,16 @@ services:
     image: grafana/grafana
     ports:
       - "3000:3000"
+    # Set the admin user and password
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
+    # Mount the Grafana data directory
     volumes:
       - grafana-data:/var/lib/grafana
     depends_on:
       - prometheus
 
 volumes:
+# Create a volume for Grafana data
   grafana-data:
