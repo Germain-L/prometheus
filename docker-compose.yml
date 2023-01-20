@@ -1,5 +1,6 @@
 services:
   server:
+    container_name: server
     build: 
       context: ./server
       dockerfile: Dockerfile
@@ -10,6 +11,7 @@ services:
       - "prometheus.io/port=8000"
 
   client:
+    container_name: client
     build: 
       context: ./client
       dockerfile: Dockerfile
@@ -17,6 +19,7 @@ services:
       - server
 
   prometheus:
+    container_name: prometheus
     image: prom/prometheus
     volumes:
       - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
